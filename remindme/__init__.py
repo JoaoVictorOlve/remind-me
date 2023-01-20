@@ -9,8 +9,8 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SECRET_KEY'] = 'secret_key'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql+psycopg2://remind:123456@localhost/postgres-remindme{DB_NAME}'
     db.init_app(app)
 
     from .views import views
@@ -37,6 +37,6 @@ def create_app():
 # Caso houver erro nessa parte pasta instalar outra versao do SQLAlchemy
 # Use este comando -> pip install flask-sqlalchemy==2.5.1
 def create_database(app):
-    if not path.exists('website/' + DB_NAME):
+    if not path.exists('remindme/' + DB_NAME):
         db.create_all(app=app)
         print('Created Database!')
