@@ -1,77 +1,84 @@
-# ATENÇÃO - Este é o código do Prototipo
-# from flask import Blueprint, render_template, request, flash, jsonify
-# from flask_login import login_required, current_user
-# from .models import Note
-# from . import db
-# import json
-
-# views = Blueprint('views', __name__)
-
-# @views.route('/', methods=['GET', 'POST'])
-# @login_required
-# def home():
-#     if request.method == 'POST':
-#         note = request.form.get('note')
-
-#         if len(note) < 1:
-#             flash('Note is too short!', category='error')
-#         else:
-#             new_note = Note(data=note, user_id=current_user.id)
-#             db.session.add(new_note)
-#             db.session.commit()
-#             flash('Note added!', category='success')
-
-#     return render_template("home.html", user=current_user)
-
-
-# @views.route('/delete-note', methods=['POST'])
-# def delete_note():
-#     note = json.loads(request.data)
-#     noteId = note['noteId']
-#     note = Note.query.get(noteId)
-#     if note:
-#         if note.user_id == current_user.id:
-#             db.session.delete(note)
-#             db.session.commit()
-
-#     return jsonify({})
-
-## Arquivo Alterado durante os testes alterando note pra task
-## Com a alteração para TASK nao esta adicionando notas, nao foi mexido nos templates.
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import render_template, request, flash
 from flask_login import login_required, current_user
-from .models import Task
-from . import db
-import json
+from remindme.models import Task
+from remindme import db
+from remindme import app
 
-views = Blueprint('views', __name__)
+@app.route("/")
+@app.route("/home")
+def home_page():
+    return render_template("home.html")
 
-
-@views.route('/', methods=['GET', 'POST'])
+@app.route("/tasks", methods=["GET", "POST"])
 @login_required
-def home():
-    if request.method == 'POST':
-        task = request.form.get('task')
+def tasks_page():
+    selling_form = SellItemForm()
+    purchase_form = PurchaseItemForm()
+    if request.method == "POST":
+        #Purchase Item
+        purchased_item = request.form.get("purchased_item")
+        p_item_object = Item.query.filter_by(name=purchased_item).first()
+        if p_item_object:
+            if current_user.can_purchase(p_item_object):
+                p_item_object.buy(current_user)
+                flash(f"You purchased {p_item_object.name} for {p_item_object.price}$", category="success")
+            else:
+                flash("Sorry, you don't have enough money to purchase this item...", category="info")
+        #Sell Item
+        sold_item = request.form.get("sold_item")
+        s_item_object = Item.query.filter_by(name=sold_item).first()
+        if s_item_object:
+            if current_user.can_sell(s_item_object):
+                s_item_object.sell(current_user)
+                flash(f"You sold {s_item_object.name} for {s_item_object.price}$", category="success")
+            else:
+                flash(f"Something went wrong with selling {s_item_object.name}", category="danger")
+    
+        return redirect(url_for("market_page"))
 
-        if len(task) < 1:
-            flash('Task is too short!', category='error')
+    if request.method == "GET":
+        items = Item.query.filter_by(owner=None)
+        owned_items = Item.query.filter_by(owner=current_user.id)
+        return render_template("market.html", items = items, purchase_form=purchase_form, owned_items = owned_items, selling_form = selling_form)
+
+@app.route("/register", methods=["GET", "POST"])
+def register_page():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user_to_create = User(username=form.username.data,
+                              email_address=form.email_address.data,
+                              password=form.password1.data)
+        db.session.add(user_to_create)
+        db.session.commit()
+        login_user(user_to_create)
+        flash(f"Account created! You were logged in as {user_to_create.username}", category="success")
+        return redirect(url_for("market_page"))
+    if form.errors != {}: #If there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f"There was an error with creating a user: {err_msg}", category="danger")
+
+    return render_template("register.html", form=form)
+
+@app.route("/login", methods=["GET", "POST"])
+def login_page():
+    form = LoginForm()
+    if form.validate_on_submit():
+        attempted_user = User.query.filter_by(username=form.username.data).first()
+        if attempted_user and attempted_user.check_password_correction(
+            attempted_password=form.password.data
+        ):
+            login_user(attempted_user)
+            flash(f"Logged as {attempted_user.username}", category="success")
+            return redirect(url_for("market_page"))
         else:
-            new_task = Task(data=task, user_id=current_user.id)
-            db.session.add(new_task)
-            db.session.commit()
-            flash('task added!', category='success')
-
-    return render_template("home.html", user=current_user)
+            flash("Something is wrong! Check the username and password", category="danger")
 
 
-@views.route('/delete-note', methods=['POST'])
-def delete_note():
-    task = json.loads(request.data)
-    taskId = task['taskId']
-    task = Task.query.get(taskId)
-    if task:
-        if task.user_id == current_user.id:
-            db.session.delete(task)
-            db.session.commit()
 
-    return jsonify({})
+    return render_template("login.html", form=form)
+
+@app.route("/logout")
+def logout_page():
+    logout_user()
+    flash("You have been logged out!", category="info")
+    return redirect(url_for("home_page"))

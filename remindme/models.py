@@ -22,7 +22,7 @@ class Task(db.Model):
     description = db.Column(db.String(250))
     register_date = db.Column(db.DateTime(timezone=True), default=func.now())
     conclusion_date = db.Column(db.DateTime())
-    status = db.Column(db.String(150))
+    done = db.Column(db.Boolean, nullable=False, default=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class User(db.Model, UserMixin):
