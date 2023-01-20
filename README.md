@@ -21,10 +21,6 @@ logo
 - [@Thiago](https://github.com/thiagofranca85)
 
 
-## 📄 License
-
-This project is under license (LLDG) - see the LICENSE.md file for details.
-
 
 ## 🛠️ Built With
 
@@ -40,7 +36,9 @@ Tools Used
 * [Html](https://pt.wikipedia.org/wiki/HTML5) - Hypertext Markup Language
 * [Css](https://developer.mozilla.org/pt-BR/docs/Web/CSS) -CSS describes how elements are displayed on screen, paper, speech, or other media
 * [DBeaver](https://dbeaver.io/download/) - DBeaver is a cross-platform program that aims to connect and manipulate various types of databases.
-* 
+
+
+
 ## 🎁 Expressions of Gratitude
 
 * Team was agile and accurate.
