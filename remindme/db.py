@@ -5,7 +5,8 @@ try:
     host = "localhost",
     port ="5435",
     database = "postgres-remindme", 
-    user="remind", password = "123456")
+    user="remind",
+    password = "123456")
     print('Connected.')
 
 except Exception:
