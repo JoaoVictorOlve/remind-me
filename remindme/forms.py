@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, DateField, SelectField
 from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
-from remindme.models import User
+from remindme.models import User, Task
 
 class RegisterForm(FlaskForm):
 
@@ -25,10 +25,19 @@ class LoginForm(FlaskForm):
     username = StringField(label="User Name", validators=[DataRequired()])
     password = StringField(label="Password", validators=[DataRequired()])
     submit = SubmitField(label="Login")
+    
+class CreateTask(FlaskForm):
+    task_name = StringField(label="Task: ", validators=[Length(min=2, max=30), DataRequired()])
+    description = StringField(label="Description: ", validators=[Length(min=2, max=250), DataRequired()])
+    conclusion_date = DateField(label="Start Date: ", format= "%d=%m-%Y", validators =[DataRequired()])
+    submit = SubmitField(label="Create")
 
-class PurchaseItemForm(FlaskForm):
-    submit = SubmitField(label="Purchase Item")
+class EditTask(FlaskForm):
+    task_name = StringField(label="Task: ", validators=[Length(min=2, max=30), DataRequired()])
+    description = StringField(label="Description: ", validators=[Length(min=2, max=250), DataRequired()])
+    conclusion_date = DateField(label="Start Date: ", format= "%d=%m-%Y", validators =[DataRequired()])
+    submit = SubmitField(label="Edit")
 
-class SellItemForm(FlaskForm):
-    submit = SubmitField(label="Sell Item")
+class DeleteTask(FlaskForm):
+    submit = SubmitField(label="Delete")
 

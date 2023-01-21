@@ -1,7 +1,7 @@
 from remindme import app
 from flask import render_template, request, redirect, url_for, flash, get_flashed_messages, request
-from remindme.models import Item, User
-from remindme.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
+from remindme.models import Task, User
+from remindme.forms import RegisterForm, LoginForm
 from remindme import db
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -10,37 +10,10 @@ from flask_login import login_user, logout_user, login_required, current_user
 def home_page():
     return render_template("home.html")
 
-@app.route("/market", methods=["GET", "POST"])
+@app.route("/task", methods=["GET", "POST"])
 @login_required
-def market_page():
-    selling_form = SellItemForm()
-    purchase_form = PurchaseItemForm()
-    if request.method == "POST":
-        #Purchase Item
-        purchased_item = request.form.get("purchased_item")
-        p_item_object = Item.query.filter_by(name=purchased_item).first()
-        if p_item_object:
-            if current_user.can_purchase(p_item_object):
-                p_item_object.buy(current_user)
-                flash(f"You purchased {p_item_object.name} for {p_item_object.price}$", category="success")
-            else:
-                flash("Sorry, you don't have enough money to purchase this item...", category="info")
-        #Sell Item
-        sold_item = request.form.get("sold_item")
-        s_item_object = Item.query.filter_by(name=sold_item).first()
-        if s_item_object:
-            if current_user.can_sell(s_item_object):
-                s_item_object.sell(current_user)
-                flash(f"You sold {s_item_object.name} for {s_item_object.price}$", category="success")
-            else:
-                flash(f"Something went wrong with selling {s_item_object.name}", category="danger")
-    
-        return redirect(url_for("market_page"))
-
-    if request.method == "GET":
-        items = Item.query.filter_by(owner=None)
-        owned_items = Item.query.filter_by(owner=current_user.id)
-        return render_template("market.html", items = items, purchase_form=purchase_form, owned_items = owned_items, selling_form = selling_form)
+def task_page():
+        return render_template("task.html")
     
 
 @app.route("/register", methods=["GET", "POST"])
@@ -54,7 +27,7 @@ def register_page():
         db.session.commit()
         login_user(user_to_create)
         flash(f"Account created! You were logged in as {user_to_create.username}", category="success")
-        return redirect(url_for("market_page"))
+        return redirect(url_for("home_page"))
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():
             flash(f"There was an error with creating a user: {err_msg}", category="danger")
@@ -71,7 +44,7 @@ def login_page():
         ):
             login_user(attempted_user)
             flash(f"Logged as {attempted_user.username}", category="success")
-            return redirect(url_for("market_page"))
+            return redirect(url_for("home_page"))
         else:
             flash("Something is wrong! Check the username and password", category="danger")
 
