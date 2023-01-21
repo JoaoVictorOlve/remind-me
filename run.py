@@ -1,4 +1,4 @@
-from market import app
+from remindme import app
 
 if __name__ == "__main__":
     app.run(debug=True)

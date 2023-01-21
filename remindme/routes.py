@@ -1,8 +1,8 @@
-from market import app
+from remindme import app
 from flask import render_template, request, redirect, url_for, flash, get_flashed_messages, request
-from market.models import Item, User
-from market.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
-from market import db
+from remindme.models import Item, User
+from remindme.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
+from remindme import db
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route("/")
