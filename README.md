@@ -3,7 +3,7 @@
 Rest api +Devs2blu project. Flask + Postgres + web + docker
 
 
-logo
+![logo](https://github.com/JoaoVictorOlve/remind-me/blob/406aadb7722c21a92f9ddca50e4734797e0ad3db/LogoRemindMe.jpeg)
 
 
 
