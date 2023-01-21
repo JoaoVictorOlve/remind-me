@@ -1,8 +1,9 @@
-from flask import render_template, request, flash
-from flask_login import login_required, current_user
-from remindme.models import Task
+from flask import render_template, request, redirect, url_for, flash, get_flashed_messages, request
+from flask_login import login_user, logout_user, login_required, current_user
+from remindme.models import Task, User
 from remindme import db
 from remindme import app
+from remindme.forms import RegisterForm, LoginForm, PurchaseItemForm, SellItemForm
 
 @app.route("/")
 @app.route("/home")
@@ -36,6 +37,8 @@ def tasks_page():
     
         return redirect(url_for("market_page"))
 
+
+
     if request.method == "GET":
         items = Item.query.filter_by(owner=None)
         owned_items = Item.query.filter_by(owner=current_user.id)
@@ -52,7 +55,8 @@ def register_page():
         db.session.commit()
         login_user(user_to_create)
         flash(f"Account created! You were logged in as {user_to_create.username}", category="success")
-        return redirect(url_for("market_page"))
+        return redirect(url_for("tasks_page"))
+
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():
             flash(f"There was an error with creating a user: {err_msg}", category="danger")
@@ -69,7 +73,7 @@ def login_page():
         ):
             login_user(attempted_user)
             flash(f"Logged as {attempted_user.username}", category="success")
-            return redirect(url_for("market_page"))
+            return redirect(url_for("tasks_page"))
         else:
             flash("Something is wrong! Check the username and password", category="danger")
 
