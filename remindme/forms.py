@@ -35,14 +35,14 @@ class CreateTask(FlaskForm):
     register_date = DateField(label="Data Cadastro: ", format= "%d=%m-%Y", validators =[DataRequired()], default=today)
     conclusion_date = DateField(label="Data Conclusão: ", format= "%d=%m-%Y", validators =[DataRequired()])
     done = BooleanField(label="Concluído?", validators=[DataRequired()])
-    submit = SubmitField(label="Criar")
+    submit = SubmitField(label="Nova Tarefa")
 
 class EditTask(FlaskForm):
     task_name = StringField(label="Task: ", validators=[Length(min=2, max=30), DataRequired()])
     description = StringField(label="Description: ", validators=[Length(min=2, max=250), DataRequired()])
     conclusion_date = DateField(label="Start Date: ", format= "%d=%m-%Y", validators =[DataRequired()])
-    submit = SubmitField(label="Edit")
+    submit = SubmitField(label="Edit Task")
 
 class DeleteTask(FlaskForm):
-    submit = SubmitField(label="Delete")
+    submit = SubmitField(label="Delete Task")
 

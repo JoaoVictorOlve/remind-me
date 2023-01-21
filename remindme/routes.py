@@ -15,16 +15,21 @@ def home_page():
 def task_page():
     form = CreateTask()
     if form.validate_on_submit():
-        task_to_create = Task(task_name=form.task_name.data,
-                              description=form.description.data,
-                              register_date=form.register_date.data,
-                              conclusion_date=form.conclusion_date.data,
-                              done=form.done.data)
-        db.session.add(task_to_create)
+        task_name = request.form.get("task_name")
+        description = request.form.get("description")
+        register_date = request.form.get("register_date")
+        conclusion_date = request.form.get("conclusion_date")
+        done = request.form.get("done")
+        new_task = Task(task_name=task_name, 
+                        description=description, 
+                        register_date=register_date, 
+                        conclusion_date=conclusion_date, 
+                        done=done,
+                        complete=False)
+        db.session.add(new_task)
         db.session.commit()
         return redirect(url_for('task_page'))    
-    return render_template("task.html", form=form)
-    
+    return render_template("task.html", form=form)    
 
 @app.route("/register", methods=["GET", "POST"])
 def register_page():
