@@ -1,7 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, DateField, BooleanField
 from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
+from datetime import datetime
 from remindme.models import User, Task
+
+today = datetime.today()
 
 class RegisterForm(FlaskForm):
 
@@ -25,12 +28,14 @@ class LoginForm(FlaskForm):
     username = StringField(label="User Name", validators=[DataRequired()])
     password = StringField(label="Password", validators=[DataRequired()])
     submit = SubmitField(label="Login")
-    
+
 class CreateTask(FlaskForm):
-    task_name = StringField(label="Task: ", validators=[Length(min=2, max=30), DataRequired()])
-    description = StringField(label="Description: ", validators=[Length(min=2, max=250), DataRequired()])
-    conclusion_date = DateField(label="Start Date: ", format= "%d=%m-%Y", validators =[DataRequired()])
-    submit = SubmitField(label="Create")
+    task_name = StringField(label="Tarefa: ", validators=[Length(min=2, max=30), DataRequired()])
+    description = StringField(label="Descrição: ", validators=[Length(min=2, max=250), DataRequired()])
+    register_date = DateField(label="Data Cadastro: ", format= "%d=%m-%Y", validators =[DataRequired()], default=today)
+    conclusion_date = DateField(label="Data Conclusão: ", format= "%d=%m-%Y", validators =[DataRequired()])
+    done = BooleanField(label="Concluído?", validators=[DataRequired()])
+    submit = SubmitField(label="Criar")
 
 class EditTask(FlaskForm):
     task_name = StringField(label="Task: ", validators=[Length(min=2, max=30), DataRequired()])

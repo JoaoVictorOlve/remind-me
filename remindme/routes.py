@@ -1,7 +1,7 @@
 from remindme import app
 from flask import render_template, request, redirect, url_for, flash, get_flashed_messages, request
 from remindme.models import Task, User
-from remindme.forms import RegisterForm, LoginForm
+from remindme.forms import RegisterForm, LoginForm, CreateTask
 from remindme import db
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -13,7 +13,17 @@ def home_page():
 @app.route("/task", methods=["GET", "POST"])
 @login_required
 def task_page():
-        return render_template("task.html")
+    form = CreateTask()
+    if form.validate_on_submit():
+        task_to_create = Task(task_name=form.task_name.data,
+                              description=form.description.data,
+                              register_date=form.register_date.data,
+                              conclusion_date=form.conclusion_date.data,
+                              done=form.done.data)
+        db.session.add(task_to_create)
+        db.session.commit()
+        return redirect(url_for('task_page'))    
+    return render_template("task.html", form=form)
     
 
 @app.route("/register", methods=["GET", "POST"])
