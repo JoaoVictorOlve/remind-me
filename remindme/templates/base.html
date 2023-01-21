@@ -18,7 +18,7 @@
     <header>
         <!-- Fixed navbar -->
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="{{url_for('home_page')}}">Flask Market</a>
+            <a class="navbar-brand" href="{{url_for('home_page')}}">REMIND-ME</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -28,7 +28,7 @@
                 <a class="nav-link" href="{{url_for('home_page')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
-                <a class="nav-link" href="{{url_for('market_page')}}">Market</a>
+                <a class="nav-link" href="{{url_for('market_page')}}">Tarefas</a>
                 </li>
             </ul>
 
@@ -42,7 +42,7 @@
                 </a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link">Welcome {{ current_user.username }}!</a>
+                <a class="nav-link">Bem vindo {{ current_user.username }}!</a>
               </li>
               <li class="nav-item active">
                   <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
@@ -56,7 +56,7 @@
                   <a class="nav-link" href="{{url_for('login_page')}}">Login</a>
               </li>
               <li class="nav-item active">
-                  <a class="nav-link" href="{{url_for('register_page')}}">Register</a>
+                  <a class="nav-link" href="{{url_for('register_page')}}">Cadastre-se</a>
               </li>
               </ul>
               

@@ -8,16 +8,16 @@ Login Page
 <div class="text-center">
      <div class="container">
 
-        <h1>Sign In</h1>
+        <h1>Acessar</h1>
 
         <form id="login_form" method="POST" class="form-signin">
             {{ form.hidden_tag() }}
 
             {{ form.username.label() }}
-            {{ form.username(class="form-control", placeholder="User Name") }}
+            {{ form.username(class="form-control", placeholder="Usuario") }}
 
             {{ form.password.label() }}
-            {{ form.password(class="form-control", placeholder="Password") }}
+            {{ form.password(class="form-control", placeholder="Senha") }}
             <br>
             {{ form.submit(class="btn btn-lg btn-block btn-primary")}}
         </form>
@@ -25,8 +25,8 @@ Login Page
      <br>
 
      <div class="checkbox nb-3">
-        <h6>Do not have an account?</h6>
-        <a class="btn btn-sm btn-secondary" href="{{ url_for('register_page') }}">Register Page</a>
+        <h6>Você não tem conta?</h6>
+        <a class="btn btn-sm btn-secondary" href="{{ url_for('register_page') }}">Cadastre-se</a>
      </div>
 </div>
 

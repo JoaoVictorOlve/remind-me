@@ -7,10 +7,11 @@ Home Page
 {% block content %}
 <!-- Header-->
 <div id="home_page" class="bg-dark bg-gradient text-white">
+  <a class="navbar-brand" href="{{ url_for('home_page') }}"><img src="../static/images/remind.me.png" width="240px"></a>
   <div class="container px-4 text-center">
-      <h1 class="fw-bolder">Welcome to the Flask Market!</h1>
-      <p class="lead">Purchase our items in the best online market of North Ireland</p>
-      <a class="btn btn-lg bg-primary text-white" href="{{url_for('market_page')}}">Get started!</a>
+      <h1 class="fw-bolder">Bem vindo a sua Lista de Tarefas!</h1>
+      <p class="lead">Controle de tarefas de maneira descomplicada</p>
+      <a class="btn btn-lg bg-primary text-white" href="{{url_for('market_page')}}">Vamos lá!</a>
   </div>
 </div>
 <!-- About section-->
