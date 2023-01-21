@@ -1,0 +1,53 @@
+body{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    background-color:#212121;
+    color: white;
+    text-align:center;
+}
+header, header nav{
+    height:10vh;
+}
+
+#money_info {
+	color: lawngreen;
+	font-weight: bold;
+}
+
+#home_page{
+	padding:5vw;
+	margin:3vw;
+}
+
+#login_form{
+	color: white;
+}
+
+#register_form {
+	color: white;
+}
+
+#market_row {
+	width: 100vw;
+}
+
+#available_items_title {
+	text-align:left;
+	margin-left:2vw;
+}
+
+#owned_items_title {
+	text-align:left;
+	margin-left:2vw;
+}
+
+.owned_items_card {
+	width: 20vw;
+	margin-bottom:3vh;
+}
+
+.modal-content {
+        background-color: #212121
+    }
