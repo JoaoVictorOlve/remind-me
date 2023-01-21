@@ -44,7 +44,7 @@ def login_page():
         ):
             login_user(attempted_user)
             flash(f"Logged as {attempted_user.username}", category="success")
-            return redirect(url_for("home_page"))
+            return render_template("task.html")
         else:
             flash("Something is wrong! Check the username and password", category="danger")
 
