@@ -3,10 +3,38 @@
   Task Page
 {% endblock %}
 {% block content %}
+<!-- Fiz isso apenas pra testar
+Coloquei dados na mao nas tasks no banco e listei eles 
+na aba de tarefas. -->
+{% for task in task_list %}
+<div class="task-list">
+  <div class="task-table">
+    <table>
+      <thead>
+        <th>ID</th>
+        <th>Tarefa</th>
+        <th>Descrição</th>
+        <th>Data Inicial</th>
+        <th>Data Conclusão</th>
+        <th>Concluído?</th>
+      </thead>
+      <tbody>
+        <td>{{task.id}}</td>
+        <td>{{task.task_name}}</td>
+        <td>{{task.description}}</td>
+        <td>{{task.register_date}}</td>
+        <td>{{task.conclusion_date}}</td>
+        <td>{{task.done}}</td>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endfor %}
+<!-- Aqui termina a listagem das tarefas -->
 <div class="container">
   <br>
   <h3>Cadastro de Tarefa</h3>
-  <form method="POST" action="">
+  <form method="POST" action="/add">
     {{ form.hidden_tag() }}
     <br>
     <fieldset>
