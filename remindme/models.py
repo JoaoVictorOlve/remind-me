@@ -29,7 +29,6 @@ class Task(db.Model):
     task_name = db.Column(db.String(150))
     description = db.Column(db.String(250))
     register_date = db.Column(db.DateTime(timezone=True), default=datetime.now())
-    conclusion_date = db.Column(db.DateTime(timezone=True), default=datetime.now())
     done = db.Column(db.Boolean, default=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
     
