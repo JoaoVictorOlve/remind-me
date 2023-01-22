@@ -33,5 +33,4 @@ class Task(db.Model):
     done = db.Column(db.Boolean, default=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
     
-
     

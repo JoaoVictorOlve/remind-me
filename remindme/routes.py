@@ -14,7 +14,7 @@ def home_page():
 @app.route("/task", methods=["GET"])
 @login_required
 def task_page():
-    task_list = Task.query.all()  
+    task_list = Task.query.filter_by(owner=current_user.id)
     return render_template("task.html", task_list=task_list)    
 
 @app.route("/add", methods=["GET", "POST"])
@@ -23,7 +23,8 @@ def add_task_page():
     form = CreateTask()
     if form.validate_on_submit():
         new_task = Task(task_name=form.task_name.data, 
-                        description=form.description.data)
+                        description=form.description.data,
+                        owner=current_user.id)
         db.session.add(new_task)
         db.session.commit()
         return redirect(url_for("task_page"))
