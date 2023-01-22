@@ -15,20 +15,20 @@ def home_page():
 def task_page():
     form = CreateTask()
     if form.validate_on_submit():
-        task_name = request.form.get("task_name")
-        description = request.form.get("description")
-        register_date = request.form.get("register_date")
-        conclusion_date = request.form.get("conclusion_date")
-        done = request.form.get("done")
-        new_task = Task(task_name=task_name, 
-                        description=description, 
-                        register_date=register_date, 
-                        conclusion_date=conclusion_date, 
-                        done=done,
-                        complete=False)
+        task_name = form.task_name.data
+        description = form.description.data
+        register_date = form.register_date.data
+        conclusion_date = form.conclusion_date.data
+        done = form.done.data
+        new_task = Task(task_name, description, register_date, conclusion_date, done)
+        # new_task = Task(task_name=form.task_name.data, 
+        #                 description=form.description.data, 
+        #                 register_date=form.register_date.data, 
+        #                 conclusion_date=form.conclusion_date.data, 
+        #                 done=form.done.data)
         db.session.add(new_task)
         db.session.commit()
-        return redirect(url_for('task_page'))    
+        return redirect(url_for('home_page'))    
     return render_template("task.html", form=form)    
 
 @app.route("/register", methods=["GET", "POST"])
@@ -59,11 +59,9 @@ def login_page():
         ):
             login_user(attempted_user)
             flash(f"Logged as {attempted_user.username}", category="success")
-            return render_template("task.html")
+            return render_template("home.html", form=form)
         else:
             flash("Something is wrong! Check the username and password", category="danger")
-
-
 
     return render_template("login.html", form=form)
 
