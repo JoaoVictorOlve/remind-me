@@ -1,6 +1,6 @@
 from remindme import app
 from sqlalchemy.sql import func
-from flask import render_template, request, redirect, url_for, flash, get_flashed_messages, request
+from flask import render_template, redirect, url_for, flash, get_flashed_messages
 from remindme.models import Task, User
 from remindme.forms import RegisterForm, LoginForm, CreateTask, EditTask
 from remindme import db
@@ -51,7 +51,7 @@ def register_page():
         db.session.commit()
         login_user(user_to_create)
         flash(f"Account created! You were logged in as {user_to_create.username}", category="success")
-        return redirect(url_for("home_page"))
+        return redirect(url_for("task_page"))
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():
             flash(f"There was an error with creating a user: {err_msg}", category="danger")
