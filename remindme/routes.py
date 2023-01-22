@@ -2,7 +2,7 @@ from remindme import app
 from sqlalchemy.sql import func
 from flask import render_template, request, redirect, url_for, flash, get_flashed_messages, request
 from remindme.models import Task, User
-from remindme.forms import RegisterForm, LoginForm, CreateTask
+from remindme.forms import RegisterForm, LoginForm, CreateTask, EditTask
 from remindme import db
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -33,6 +33,11 @@ def add_task_page():
                 print(f"There was an error with creating a user: {err_msg}")
 
     return render_template("task_create.html", form=form)
+
+@app.route("/edit")
+@login_required
+def edit_task_page():
+    return render_template("task_edit.html")
 
 
 @app.route("/register", methods=["GET", "POST"])

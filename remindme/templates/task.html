@@ -31,5 +31,11 @@ na aba de tarefas. -->
 </div>
 
 {% endfor %}
-<a class="btn btn-primary" href="{{url_for('add_task_page')}}">Adicionar</a>
+<div class="container">
+  <a class="btn btn-primary" href="{{url_for('add_task_page')}}">Adicionar</a>
+</div>
+<div class="container">
+  <a class="btn btn-primary" href="{{url_for('edit_task_page', )}}">Editar</a>
+</div>
+
 {% endblock %}

@@ -26,7 +26,7 @@ class RegisterForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     username = StringField(label="Usuário", validators=[DataRequired()])
-    password = StringField(label="Senha", validators=[DataRequired()])
+    password = PasswordField(label="Senha", validators=[DataRequired()])
     submit = SubmitField(label="Login")
 
 class CreateTask(FlaskForm):
@@ -35,10 +35,9 @@ class CreateTask(FlaskForm):
     submit = SubmitField("Nova Tarefa")
 
 class EditTask(FlaskForm):
-    task_name = StringField(label="Task: ", validators=[Length(min=2, max=30), DataRequired()])
-    description = StringField(label="Description: ", validators=[Length(min=2, max=250), DataRequired()])
-    conclusion_date = DateField(label="Conclusion Date: ", format= "%d=%m-%Y", validators =[DataRequired()])
-    submit = SubmitField(label="Edit Task")
+    task_name = StringField(label="Tarefa: ", validators=[Length(min=2, max=30), DataRequired()])
+    description = StringField(label="Descrição: ", validators=[Length(min=2, max=250), DataRequired()])
+    submit = SubmitField(label="Editar")
 
 class DeleteTask(FlaskForm):
     submit = SubmitField(label="Delete Task")
