@@ -1,6 +1,6 @@
 from remindme import db, login_manager, bcrypt
 from flask_login import UserMixin
-from sqlalchemy.sql import func
+from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -28,10 +28,10 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     task_name = db.Column(db.String(150))
     description = db.Column(db.String(250))
-    register_date = db.Column(db.DateTime(timezone=True), default=func.now())
-    conclusion_date = db.Column(db.DateTime())
-    done = db.Column(db.Boolean, nullable=False, default=False)
+    register_date = db.Column(db.DateTime(timezone=True), default=datetime.now())
+    conclusion_date = db.Column(db.DateTime(timezone=True), default=datetime.now())
+    done = db.Column(db.Boolean, default=False)
     owner = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+    
 
     

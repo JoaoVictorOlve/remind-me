@@ -1,4 +1,5 @@
 from remindme import app
+from sqlalchemy.sql import func
 from flask import render_template, request, redirect, url_for, flash, get_flashed_messages, request
 from remindme.models import Task, User
 from remindme.forms import RegisterForm, LoginForm, CreateTask
@@ -10,27 +11,28 @@ from flask_login import login_user, logout_user, login_required, current_user
 def home_page():
     return render_template("home.html")
 
-@app.route("/task", methods=["GET", "POST"])
+@app.route("/task", methods=["GET"])
 @login_required
 def task_page():
     task_list = Task.query.all()  
+    return render_template("task.html", task_list=task_list)    
+
+@app.route("/add", methods=["GET", "POST"])
+@login_required
+def add_task_page():
     form = CreateTask()
     if form.validate_on_submit():
-        add()
-    return render_template("task.html", form=form, task_list=task_list)    
+        new_task = Task(task_name=form.task_name.data, 
+                        description=form.description.data)
+        db.session.add(new_task)
+        db.session.commit()
+        return redirect(url_for("task_page"))
+    else:
+        for err_msg in form.errors.values():
+                print(f"There was an error with creating a user: {err_msg}")
 
-@app.route("/add", methods=["POST"])
-@login_required
-def add():
-    form = CreateTask()
-    new_task = Task(task_name=form.task_name.data, 
-                    description=form.description.data, 
-                    register_date=form.register_date.data, 
-                    conclusion_date=form.conclusion_date.data, 
-                    done=form.done.data)
-    db.session.add(new_task)
-    db.session.commit()
-    return redirect(url_for("task_page"))
+    return render_template("task_create.html", form=form)
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register_page():

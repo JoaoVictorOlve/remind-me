@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, DateField, BooleanField, TimeField, DateTimeField
 from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
 from datetime import datetime
 from remindme.models import User, Task
@@ -32,15 +32,12 @@ class LoginForm(FlaskForm):
 class CreateTask(FlaskForm):
     task_name = StringField(label="Tarefa: ", validators=[Length(min=2, max=30), DataRequired()])
     description = StringField(label="Descrição: ", validators=[Length(min=2, max=250), DataRequired()])
-    register_date = DateField(label="Data Cadastro: ", format= "%d=%m-%Y", validators =[DataRequired()], default=today)
-    conclusion_date = DateField(label="Data Conclusão: ", format= "%d=%m-%Y", validators =[DataRequired()])
-    done = BooleanField(label="Concluído?", validators=[DataRequired()])
     submit = SubmitField("Nova Tarefa")
 
 class EditTask(FlaskForm):
     task_name = StringField(label="Task: ", validators=[Length(min=2, max=30), DataRequired()])
     description = StringField(label="Description: ", validators=[Length(min=2, max=250), DataRequired()])
-    conclusion_date = DateField(label="Start Date: ", format= "%d=%m-%Y", validators =[DataRequired()])
+    conclusion_date = DateField(label="Conclusion Date: ", format= "%d=%m-%Y", validators =[DataRequired()])
     submit = SubmitField(label="Edit Task")
 
 class DeleteTask(FlaskForm):
