@@ -3,11 +3,9 @@
 Remind.Me
 {% endblock %}
 {% block content %}
-<!-- Fiz isso apenas pra testar
-Coloquei dados na mao nas tasks no banco e listei eles 
-na aba de tarefas. -->
 
-{% for task in task_list %}
+<!-- Listagem ordenada do banco com Jinja -->
+{% for task in task_list|sort(attribute='id') %}
 {% include "include/task_modals.html" %}
 {{ edit_form.hidden_tag() }}
 {{ delete_form.hidden_tag() }}
