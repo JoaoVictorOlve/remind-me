@@ -11,21 +11,27 @@ na aba de tarefas. -->
 {% include "include/task_modals.html" %}
 {{ edit_form.hidden_tag() }}
 {{ delete_form.hidden_tag() }}
+{{ edit_done_form.hidden_tag() }}
 <div class="container">
   <div class="task-list">
     <div class="task-table">
       <table>
         <thead>
+          <th>Status</th>
           <th>Tarefa</th>
-          <th>Concluído?</th>
         </thead>
         <tbody>
-          <td>{{task.task_name}}</td>
+          <td>
+            <form method="POST">
+            <input id="done_task" name="done_task" type="hidden" value="{{task.id}}">
             {%if task.done == False%}
-            <td>Em Andamento</td>
+            {{ edit_done_form.undone_submit(class="btn btn-warning", placeholder="A Fazer") }}
             {%else%}
-            <td>Concluído</td>
+            {{ edit_done_form.done_submit(class="btn btn-success", placeholder="Feito") }}
             {%endif%}
+            </form>
+          </td>
+          <td>{{task.task_name}}</td>
           <td>
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>

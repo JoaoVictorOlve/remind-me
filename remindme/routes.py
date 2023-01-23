@@ -2,7 +2,7 @@ from remindme import app
 from sqlalchemy.sql import func
 from flask import render_template, request, redirect, url_for, flash, get_flashed_messages
 from remindme.models import Task, User
-from remindme.forms import RegisterForm, LoginForm, CreateTask, EditTask, DeleteTask
+from remindme.forms import RegisterForm, LoginForm, CreateTask, EditTask, DeleteTask, EditDoneTask
 from remindme import db
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -16,6 +16,7 @@ def home_page():
 def task_page():
     task_list = Task.query.filter_by(owner=current_user.id)
     edit_form = EditTask()
+    edit_done_form = EditDoneTask()
     delete_form = DeleteTask()
     if request.method == "POST":
         #Delete Task
@@ -32,15 +33,24 @@ def task_page():
             e_task_object = Task.query.filter_by(id=edited_task).first()
             e_task_object.task_name = edit_form.task_name.data
             e_task_object.description = edit_form.description.data
-            e_task_object.done = edit_form.done.data
             db.session.add(e_task_object)
             db.session.commit()
             return redirect(url_for("task_page"))
-        else:
-            print('So boiola')
+        #Edit Done Task
+        edited_task_done = request.form.get("done_task")
+        ed_task_object = Task.query.filter_by(id=edited_task_done).first()
+        if ed_task_object:
+            if ed_task_object.done == True:
+                ed_task_object.done = False
+            else:
+                ed_task_object.done = True
+            db.session.commit()
+            return redirect(url_for("task_page"))
+
+    
 
     if request.method == "GET":
-        return render_template("task.html", task_list=task_list, edit_form=edit_form, delete_form=delete_form)   
+        return render_template("task.html", task_list=task_list, edit_form=edit_form, delete_form=delete_form, edit_done_form=edit_done_form)   
 
 @app.route("/add", methods=["GET", "POST"])
 @login_required
@@ -55,7 +65,7 @@ def add_task_page():
         return redirect(url_for("task_page"))
     else:
         for err_msg in form.errors.values():
-                print(f"There was an error with creating a user: {err_msg}")
+                print(f"Houve um erro ao criar tarefa: {err_msg}.")
 
     return render_template("task_create.html", form=form)
 
@@ -69,11 +79,11 @@ def register_page():
         db.session.add(user_to_create)
         db.session.commit()
         login_user(user_to_create)
-        flash(f"Account created! You were logged in as {user_to_create.username}", category="success")
+        flash(f"Conta criada! Você foi conectado como {user_to_create.username}.", category="success")
         return redirect(url_for("task_page"))
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():
-            flash(f"There was an error with creating a user: {err_msg}", category="danger")
+            flash(f"Houve um erro ao criar usuário: {err_msg}", category="danger")
 
     return render_template("register.html", form=form)
 
@@ -86,15 +96,15 @@ def login_page():
             attempted_password=form.password.data
         ):
             login_user(attempted_user)
-            flash(f"Logged as {attempted_user.username}", category="success")
+            flash(f"Conectado como {attempted_user.username}", category="success")
             return redirect(url_for("task_page"))
         else:
-            flash("Something is wrong! Check the username and password", category="danger")
+            flash("Algum erro aconteceu! Verifique seu nome e senha.", category="danger")
 
     return render_template("login.html", form=form)
 
 @app.route("/logout")
 def logout_page():
     logout_user()
-    flash("You have been logged out!", category="info")
+    flash("Você foi desconectado!", category="info")
     return redirect(url_for("home_page"))

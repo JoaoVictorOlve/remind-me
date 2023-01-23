@@ -31,8 +31,6 @@
 
           {{ edit_form.description (class="form-control", placeholder="Descrição", value=task.description) }}
 
-          {{ edit_form.done (class="form-control", placeholder="Status") }}
-
           <input id="edited_task" name="edited_task" type="hidden" value="{{task.id}}">
           {{ edit_form.submit(class="btn btn-outline-info btn-block") }}
         </form>
