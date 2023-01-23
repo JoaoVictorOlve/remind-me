@@ -27,3 +27,21 @@ header, header nav{
 .modal-content {
         background-color: #212121
     }
+
+#task-container{
+    display:flex;
+    justify-content:center;
+    margin-top:1vh;
+    background-color:#6c757d;
+    padding:1vw;
+    border-radius: 10px;
+}
+
+#task-table{
+    display:flex;
+}
+
+
+#edit_done{
+    width:5vw
+}

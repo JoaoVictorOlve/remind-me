@@ -10,27 +10,23 @@ Remind.Me
 {{ edit_form.hidden_tag() }}
 {{ delete_form.hidden_tag() }}
 {{ edit_done_form.hidden_tag() }}
-<div class="container">
+<div id="task-container" class="container bg-dark bg-gradient">
   <div class="task-list">
     <div class="task-table">
-      <table>
-        <thead>
-          <th>Status</th>
-          <th>Tarefa</th>
-        </thead>
+      <table id="task-table">
         <tbody>
-          <td>
+          <td class="text-left">
             <form method="POST">
             <input id="done_task" name="done_task" type="hidden" value="{{task.id}}">
             {%if task.done == False%}
-            {{ edit_done_form.undone_submit(class="btn btn-warning", placeholder="A Fazer") }}
+            {{ edit_done_form.undone_submit(class="btn btn-warning", id="edit_done", placeholder="A Fazer") }}
             {%else%}
-            {{ edit_done_form.done_submit(class="btn btn-success", placeholder="Feito") }}
+            {{ edit_done_form.done_submit(class="btn btn-success", id="edit_done", placeholder="Feito") }}
             {%endif%}
             </form>
           </td>
-          <td>{{task.task_name}}</td>
-          <td>
+          <td class="text-center">{{task.task_name}}</td>
+          <td class="text-center">
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
