@@ -33,11 +33,11 @@
 
           {{ edit_form.done (class="form-control", placeholder="Status") }}
 
+          <input id="edited_task" name="edited_task" type="hidden" value="{{task.id}}">
+          {{ edit_form.submit(class="btn btn-outline-info btn-block") }}
         </form>
       </div>
       <div class="modal-footer">
-        <input id="edited_task" name="edited_task" type="hidden" value="{{task.id}}">
-          {{ edit_form.submit(class="btn btn-outline-info btn-block") }}
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
