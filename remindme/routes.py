@@ -1,8 +1,8 @@
 from remindme import app
 from sqlalchemy.sql import func
-from flask import render_template, redirect, url_for, flash, get_flashed_messages
+from flask import render_template, request, redirect, url_for, flash, get_flashed_messages
 from remindme.models import Task, User
-from remindme.forms import RegisterForm, LoginForm, CreateTask, EditTask
+from remindme.forms import RegisterForm, LoginForm, CreateTask, EditTask, DeleteTask
 from remindme import db
 from flask_login import login_user, logout_user, login_required, current_user
 
@@ -11,11 +11,36 @@ from flask_login import login_user, logout_user, login_required, current_user
 def home_page():
     return render_template("home.html")
 
-@app.route("/task", methods=["GET"])
+@app.route("/task", methods=["GET", "POST"])
 @login_required
 def task_page():
     task_list = Task.query.filter_by(owner=current_user.id)
-    return render_template("task.html", task_list=task_list)    
+    edit_form = EditTask()
+    delete_form = DeleteTask()
+    if request.method == "POST":
+        #Delete Task
+        deleted_task = request.form.get("deleted_task")
+        d_task_object = Task.query.filter_by(id=deleted_task).first()
+        if d_task_object:
+            Task.query.filter_by(id=deleted_task).delete()
+            db.session.commit()
+            return redirect(url_for("task_page"))
+        #Edit Task
+        edited_task = request.form.get("edited_task")
+        e_task_object = Task.query.filter_by(id=edited_task).first()
+        if e_task_object:
+            e_task_object = Task.query.filter_by(id=edited_task).first()
+            e_task_object.task_name = edit_form.task_name.data
+            e_task_object.description = edit_form.description.data
+            e_task_object.done = edit_form.done.data
+            db.session.add(e_task_object)
+            db.session.commit()
+            return redirect(url_for("task_page"))
+        else:
+            print('So boiola')
+
+    if request.method == "GET":
+        return render_template("task.html", task_list=task_list, edit_form=edit_form, delete_form=delete_form)   
 
 @app.route("/add", methods=["GET", "POST"])
 @login_required
@@ -33,12 +58,6 @@ def add_task_page():
                 print(f"There was an error with creating a user: {err_msg}")
 
     return render_template("task_create.html", form=form)
-
-@app.route("/edit")
-@login_required
-def edit_task_page():
-    return render_template("task_edit.html")
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register_page():

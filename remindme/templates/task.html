@@ -6,25 +6,30 @@
 <!-- Fiz isso apenas pra testar
 Coloquei dados na mao nas tasks no banco e listei eles 
 na aba de tarefas. -->
+
 {% for task in task_list %}
+{% include "include/task_modals.html" %}
+{{ edit_form.hidden_tag() }}
+{{ delete_form.hidden_tag() }}
 <div class="task-list">
   <div class="task-table">
     <table>
       <thead>
-        <th>ID</th>
         <th>Tarefa</th>
-        <th>Descrição</th>
-        <th>Data Inicial</th>
-        <th>Data Conclusão</th>
         <th>Concluído?</th>
       </thead>
       <tbody>
-        <td>{{task.id}}</td>
         <td>{{task.task_name}}</td>
-        <td>{{task.description}}</td>
-        <td>{{task.register_date}}</td>
-        <td>{{task.conclusion_date}}</td>
-        <td>{{task.done}}</td>
+          {%if task.done == False%}
+          <td>Em Andamento</td>
+          {%else%}
+          <td>Concluído</td>
+          {%endif%}
+        <td>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
+        </td>
       </tbody>
     </table>
   </div>
@@ -34,8 +39,6 @@ na aba de tarefas. -->
 <div class="container">
   <a class="btn btn-primary" href="{{url_for('add_task_page')}}">Adicionar</a>
 </div>
-<div class="container">
-  <a class="btn btn-primary" href="{{url_for('edit_task_page', )}}">Editar</a>
-</div>
 
 {% endblock %}
+
