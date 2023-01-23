@@ -11,27 +11,29 @@ na aba de tarefas. -->
 {% include "include/task_modals.html" %}
 {{ edit_form.hidden_tag() }}
 {{ delete_form.hidden_tag() }}
-<div class="task-list">
-  <div class="task-table">
-    <table>
-      <thead>
-        <th>Tarefa</th>
-        <th>Concluído?</th>
-      </thead>
-      <tbody>
-        <td>{{task.task_name}}</td>
-          {%if task.done == False%}
-          <td>Em Andamento</td>
-          {%else%}
-          <td>Concluído</td>
-          {%endif%}
-        <td>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
-        </td>
-      </tbody>
-    </table>
+<div class="container">
+  <div class="task-list">
+    <div class="task-table">
+      <table>
+        <thead>
+          <th>Tarefa</th>
+          <th>Concluído?</th>
+        </thead>
+        <tbody>
+          <td>{{task.task_name}}</td>
+            {%if task.done == False%}
+            <td>Em Andamento</td>
+            {%else%}
+            <td>Concluído</td>
+            {%endif%}
+          <td>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
+          </td>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

@@ -11,11 +11,6 @@ header, header nav{
     height:10vh;
 }
 
-#money_info {
-	color: lawngreen;
-	font-weight: bold;
-}
-
 #home_page{
 	padding:5vw;
 	margin:3vw;
@@ -27,25 +22,6 @@ header, header nav{
 
 #register_form {
 	color: white;
-}
-
-#market_row {
-	width: 100vw;
-}
-
-#available_items_title {
-	text-align:left;
-	margin-left:2vw;
-}
-
-#owned_items_title {
-	text-align:left;
-	margin-left:2vw;
-}
-
-.owned_items_card {
-	width: 20vw;
-	margin-bottom:3vh;
 }
 
 .modal-content {

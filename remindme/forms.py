@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, DateField, BooleanField, TimeField, DateTimeField
-from wtforms.validators import Length, EqualTo, DataRequired, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, EmailField
+from wtforms.validators import Length, EqualTo, DataRequired, ValidationError, InputRequired, Email
 from datetime import datetime
 from remindme.models import User, Task
 
@@ -18,25 +18,25 @@ class RegisterForm(FlaskForm):
         if email_address:
             raise ValidationError("Email already exists!")
 
-    username = StringField(label="Usuário:", validators=[Length(min=2, max=30), DataRequired()])
-    email_address = StringField(label="Email:", validators=[DataRequired()])
-    password1 = PasswordField(label="Senha:", validators=[Length(min=6), DataRequired()])
+    username = StringField(label="Usuário:", validators=[InputRequired(), Length(min=2, max=30), DataRequired()])
+    email_address = EmailField(label="Email:", validators=[InputRequired(), Length(min=6,max=30), DataRequired(), Email()])
+    password1 = PasswordField(label="Senha:", validators=[InputRequired(), Length(min=6,max=30), DataRequired()])
     password2 = PasswordField(label="Confirme a Senha:", validators=[EqualTo("password1"), DataRequired()])
     submit = SubmitField(label="Criar Conta")
 
 class LoginForm(FlaskForm):
-    username = StringField(label="Usuário", validators=[DataRequired()])
-    password = PasswordField(label="Senha", validators=[DataRequired()])
+    username = StringField(label="Usuário", validators=[InputRequired(), Length(min=2,max=30), DataRequired()])
+    password = PasswordField(label="Senha", validators=[InputRequired(), Length(min=6,max=30), DataRequired()])
     submit = SubmitField(label="Login")
 
 class CreateTask(FlaskForm):
-    task_name = StringField(label="Tarefa: ", validators=[Length(min=2, max=30), DataRequired()])
-    description = StringField(label="Descrição: ", validators=[Length(min=2, max=250), DataRequired()])
+    task_name = StringField(label="Tarefa: ", validators=[InputRequired(), Length(min=2, max=30), DataRequired()])
+    description = StringField(label="Descrição: ", validators=[InputRequired(), Length(min=2, max=250), DataRequired()])
     submit = SubmitField("Nova Tarefa")
 
 class EditTask(FlaskForm):
-    task_name = StringField(label="Tarefa: ", validators=[Length(min=2, max=30), DataRequired()])
-    description = StringField(label="Descrição: ", validators=[Length(min=2, max=250), DataRequired()])
+    task_name = StringField(label="Tarefa: ", validators=[InputRequired(), Length(min=2, max=30), DataRequired()])
+    description = StringField(label="Descrição: ", validators=[InputRequired(), Length(min=2, max=250), DataRequired()])
     done = BooleanField(label="Ativo: ")
     submit = SubmitField("Editar")
 
