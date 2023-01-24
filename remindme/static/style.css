@@ -30,7 +30,7 @@ header, header nav{
 
 #task-container{
     display:flex;
-    justify-content:center;
+    justify-content: space-between;
     margin-top:1vh;
     background-color:#6c757d;
     padding:1vw;
@@ -42,7 +42,10 @@ header, header nav{
     align-items:flex-end;
 }
 
-
+.task-page-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 
 #edit_done{
     width:5vw

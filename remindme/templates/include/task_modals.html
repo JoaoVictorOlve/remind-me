@@ -25,7 +25,7 @@
       </div>
       <div class="modal-body">
           {{ edit_form.hidden_tag() }}
-          {{ edit_form.description (class="form-control", placeholder="Descrição") }}
+          {{ edit_form.description (class="form-control", placeholder="Digite a Nova Descrição") }}
 
           <input id="edited_task" name="edited_task" type="hidden" value="{{task.id}}">
           {{ edit_form.submit(class="btn btn-outline-info btn-block", style="margin-top:3vh") }}
@@ -51,7 +51,7 @@
           {{ delete_form.hidden_tag() }}
 
           <h4 class="text-center" style="margin-bottom:3vh;">
-              Deseja mesmo deletar essa task?
+              Deseja mesmo deletar esta tarefa?
           </h4>
           <input id="deleted_task" name="deleted_task" type="hidden" value="{{task.id}}">
           {{ delete_form.submit(class="btn btn-outline-danger btn-block") }}

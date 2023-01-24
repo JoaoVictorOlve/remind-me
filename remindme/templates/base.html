@@ -39,7 +39,7 @@
             
             <ul class="navbar-nav mr-right">
               <li class="nav-item active">
-                <a class="nav-link">Bem vindo {{ current_user.username }}!</a>
+                <a class="nav-link">Olá, {{ current_user.username }}.</a>
               </li>
               <li class="nav-item active">
                   <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>

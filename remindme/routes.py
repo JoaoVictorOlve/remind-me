@@ -1,6 +1,5 @@
 from remindme import app
-from sqlalchemy.sql import func
-from flask import render_template, request, redirect, url_for, flash, get_flashed_messages
+from flask import render_template, request, redirect, url_for, flash
 from remindme.models import Task, User
 from remindme.forms import RegisterForm, LoginForm, CreateTask, EditTask, DeleteTask, EditDoneTask
 from remindme import db
@@ -35,6 +34,7 @@ def task_page():
             e_task_object.description = edit_form.description.data
             db.session.add(e_task_object)
             db.session.commit()
+            flash(f"Tarefa editada com sucesso.", category="success")
             return redirect(url_for("task_page"))
         #Edit Done Task
         edited_task_done = request.form.get("done_task")
@@ -79,11 +79,11 @@ def register_page():
         db.session.add(user_to_create)
         db.session.commit()
         login_user(user_to_create)
-        flash(f"Conta criada! Você foi conectado como {user_to_create.username}.", category="success")
+        flash(f"Conta criada com sucesso! Olá {user_to_create.username}.", category="success")
         return redirect(url_for("task_page"))
     if form.errors != {}: #If there are not errors from the validations
         for err_msg in form.errors.values():
-            flash(f"Houve um erro ao criar usuário: {err_msg}", category="danger")
+            flash(f"Houve um erro ao criar a conta, tente novamente! {err_msg}", category="danger")
 
     return render_template("register.html", form=form)
 
@@ -96,15 +96,15 @@ def login_page():
             attempted_password=form.password.data
         ):
             login_user(attempted_user)
-            flash(f"Conectado como {attempted_user.username}", category="success")
+            flash(f"Conectado! Olá {attempted_user.username}.", category="success")
             return redirect(url_for("task_page"))
         else:
-            flash("Algum erro aconteceu! Verifique seu nome e senha.", category="danger")
+            flash("Houve um erro! Verifique seu Usuario e Senha e tente novamente.", category="danger")
 
     return render_template("login.html", form=form)
 
 @app.route("/logout")
 def logout_page():
     logout_user()
-    flash("Você foi desconectado!", category="info")
+    flash("Você desconectou!", category="info")
     return redirect(url_for("home_page"))

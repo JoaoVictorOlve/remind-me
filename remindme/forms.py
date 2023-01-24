@@ -40,8 +40,8 @@ class EditTask(FlaskForm):
     submit = SubmitField("Editar")
 
 class EditDoneTask(FlaskForm):
-    done_submit = SubmitField(label="Feito")
-    undone_submit = SubmitField(label="A Fazer")
+    done_submit = SubmitField(label="Fechada")
+    undone_submit = SubmitField(label="Pendente")
 
 class DeleteTask(FlaskForm):
     submit = SubmitField("Deletar")
