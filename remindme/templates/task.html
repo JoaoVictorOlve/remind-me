@@ -3,7 +3,9 @@
 Remind.Me
 {% endblock %}
 {% block content %}
-
+{% if task_verify == None %}
+<h2 style="font-weight:bold">Sem tarefas?<br>Crie sua primeira!</h2>
+{% endif %}
 <!-- Listagem ordenada do banco com Jinja -->
 {% for task in task_list|sort(attribute='id') %}
 {% include "include/task_modals.html" %}
@@ -27,13 +29,13 @@ Remind.Me
   <div >
     <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
     <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
   </div>
 </div>
 
 {% endfor %}
 <div class="container">
-  <a class="btn btn-primary" style="margin-top:2vh;" href="{{url_for('add_task_page')}}">Nova Tarefa</a>
+  <a class="btn btn-primary" style="margin-top:2vh;margin-bottom:2vh;" href="{{url_for('add_task_page')}}">Nova Tarefa</a>
 </div>
 
 {% endblock %}

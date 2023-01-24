@@ -36,11 +36,11 @@ class CreateTask(FlaskForm):
 
 class EditTask(FlaskForm):
     task_name = StringField(label="Tarefa: ", validators=[InputRequired(), Length(min=2, max=30), DataRequired()])
-    description = StringField(label="Descrição: ", validators=[InputRequired(), Length(min=2, max=250), DataRequired()])
+    description = TextAreaField(label="Descrição: ", validators=[InputRequired(), Length(min=2, max=250), DataRequired()])
     submit = SubmitField("Editar")
 
 class EditDoneTask(FlaskForm):
-    done_submit = SubmitField(label="Fechada")
+    done_submit = SubmitField(label="Feito")
     undone_submit = SubmitField(label="Pendente")
 
 class DeleteTask(FlaskForm):

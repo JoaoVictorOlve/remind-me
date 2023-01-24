@@ -25,7 +25,8 @@
       </div>
       <div class="modal-body">
           {{ edit_form.hidden_tag() }}
-          {{ edit_form.description (class="form-control", placeholder="Digite a Nova Descrição") }}
+          {% set f = edit_form.description.process_data(task.description) %}
+          {{ edit_form.description (class="form-control", rows="4", placeholder="Digite a Nova Descrição") }}
 
           <input id="edited_task" name="edited_task" type="hidden" value="{{task.id}}">
           {{ edit_form.submit(class="btn btn-outline-info btn-block", style="margin-top:3vh") }}

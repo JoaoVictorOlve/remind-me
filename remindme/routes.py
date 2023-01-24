@@ -14,6 +14,7 @@ def home_page():
 @login_required
 def task_page():
     task_list = Task.query.filter_by(owner=current_user.id)
+    task_verify = Task.query.filter_by(owner=current_user.id).first()
     edit_form = EditTask()
     edit_done_form = EditDoneTask()
     delete_form = DeleteTask()
@@ -50,7 +51,7 @@ def task_page():
     
 
     if request.method == "GET":
-        return render_template("task.html", task_list=task_list, edit_form=edit_form, delete_form=delete_form, edit_done_form=edit_done_form)   
+        return render_template("task.html", task_list=task_list, edit_form=edit_form, delete_form=delete_form, edit_done_form=edit_done_form, task_verify=task_verify)   
 
 @app.route("/add", methods=["GET", "POST"])
 @login_required

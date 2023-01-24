@@ -13,7 +13,7 @@ header, header nav{
 
 #home_page{
 	padding:5vw;
-	margin:3vw;
+    margin: 1vh 3vw 2vh 3vw;
 }
 
 #login_form{
@@ -48,6 +48,6 @@ header, header nav{
 }
 
 #edit_done{
-    width:5vw
+    width:8vw
 }
 
