@@ -4,7 +4,7 @@ Remind.Me
 {% endblock %}
 {% block content %}
 {% if task_verify == None %}
-<h2 style="font-weight:bold">Sem tarefas?<br>Crie sua primeira!</h2>
+<h2 style="font-weight:bold;margin-top:1vh;">Sem tarefas?<br>Crie sua primeira!</h2>
 {% endif %}
 <!-- Listagem ordenada do banco com Jinja -->
 {% for task in task_list|sort(attribute='id') %}
