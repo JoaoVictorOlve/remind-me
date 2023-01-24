@@ -13,9 +13,10 @@ Remind.Me
 <div id="task-container" class="container bg-dark bg-gradient">
   <div class="task-list">
     <div class="task-table">
-      <table id="task-table">
-        <tbody>
-          <td class="text-left">
+      <table>
+        <tbody id="tasks-table">
+          <div id="set-left">
+          <td>
             <form method="POST">
             <input id="done_task" name="done_task" type="hidden" value="{{task.id}}">
             {%if task.done == False%}
@@ -26,11 +27,15 @@ Remind.Me
             </form>
           </td>
           <td class="text-center">{{task.task_name}}</td>
+          </div>
+
+          <div id="set-right">
           <td class="text-center">
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>
             <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
           </td>
+          </div>
         </tbody>
       </table>
     </div>
@@ -39,7 +44,7 @@ Remind.Me
 
 {% endfor %}
 <div class="container">
-  <a class="btn btn-primary" href="{{url_for('add_task_page')}}">Adicionar</a>
+  <a class="btn btn-primary" style="margin-top:2vh;" href="{{url_for('add_task_page')}}">Adicionar</a>
 </div>
 
 {% endblock %}

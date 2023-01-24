@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, EmailField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, EmailField, TextAreaField
 from wtforms.validators import Length, EqualTo, DataRequired, ValidationError, InputRequired, Email
 from datetime import datetime
 from remindme.models import User, Task
@@ -31,7 +31,7 @@ class LoginForm(FlaskForm):
 
 class CreateTask(FlaskForm):
     task_name = StringField(label="Tarefa: ", validators=[InputRequired(), Length(min=2, max=30), DataRequired()])
-    description = StringField(label="Descrição: ", validators=[InputRequired(), Length(min=2, max=250), DataRequired()])
+    description = TextAreaField(label="Descrição: ", validators=[InputRequired(), Length(min=2, max=250), DataRequired()])
     submit = SubmitField("Nova Tarefa")
 
 class EditTask(FlaskForm):

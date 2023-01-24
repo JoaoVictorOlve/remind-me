@@ -37,11 +37,14 @@ header, header nav{
     border-radius: 10px;
 }
 
-#task-table{
+#tasks-table{
     display:flex;
+    align-items:flex-end;
 }
+
 
 
 #edit_done{
     width:5vw
 }
+
