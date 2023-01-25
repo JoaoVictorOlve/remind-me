@@ -1,2 +1,0 @@
-** Docker Remind-ME
-docker run --name postgres-remindme -e POSTGRES_PASSWORD=123456 -e POSTGRES_USER=remind -d -p 5435:5432 postgres
