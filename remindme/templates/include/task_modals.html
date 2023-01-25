@@ -1,0 +1,66 @@
+<!----More Info Modals---->
+<div class="modal fade" id="Modal-MoreInfo-{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ task.task_name }}</h5>
+        </div>
+        <div class="modal-body">
+          <textarea id="textarea-moreinfo" readonly>{{ task.description }}</textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--Edit Modals--->
+<div class="modal fade" id="Modal-Edit-{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <form method="POST">
+        {{ edit_form.task_name (id="edit_title_form", class="form-control",  placeholder="Usuario", value=task.task_name) }}
+      </div>
+      <div class="modal-body">
+          {{ edit_form.hidden_tag() }}
+          {% set f = edit_form.description.process_data(task.description) %}
+          {{ edit_form.description (class="form-control", rows="4", placeholder="Digite a Nova Descrição") }}
+
+          <input id="edited_task" name="edited_task" type="hidden" value="{{task.id}}">
+          {{ edit_form.submit(class="btn btn-outline-info btn-block", style="margin-top:3vh") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!----Delete Modals---->
+<div class="modal fade" id="Modal-Delete-{{ task.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2"></h5>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+          {{ delete_form.hidden_tag() }}
+
+          <h4 class="text-center" style="margin-bottom:3vh;">
+              Deseja mesmo deletar esta tarefa?
+          </h4>
+          <input id="deleted_task" name="deleted_task" type="hidden" value="{{task.id}}">
+          {{ delete_form.submit(class="btn btn-outline-danger btn-block") }}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

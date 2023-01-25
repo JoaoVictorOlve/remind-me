@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+Remind.Me
+{% endblock%}
+
+{% block content %}
+<!-- Header-->
+<div id="home_page" class="bg-dark bg-gradient text-white" style="margin-top:1vh;">
+  <a class="navbar-brand" href="{{ url_for('home_page') }}"><img src="../static/images/Remind.me.png" width="240px"></a>
+  <div class="container px-4 text-center">
+      <h1 class="fw-bolder">Bem vindo à sua Lista de Tarefas!</h1>
+      <p class="lead">Controle suas tarefas de maneira descomplicada.</p>
+      <a class="btn btn-lg bg-primary text-white" href="{{url_for('task_page')}}">Vamos lá!</a>
+  </div>
+</div>
+<!-- About section-->
+
+{% endblock %}

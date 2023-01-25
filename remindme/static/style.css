@@ -1,0 +1,79 @@
+body{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    background-color:#212121;
+    color: white;
+    text-align:center;
+}
+header, header nav{
+    height:10vh;
+}
+
+#home_page{
+	padding:5vw;
+    margin: 0vh 3vw 2vh 3vw;
+}
+
+#login_form{
+	color: white;
+}
+
+#register_form {
+	color: white;
+}
+
+.modal-content {
+        background-color: #212121
+    }
+
+#task-container{
+    display:flex;
+    justify-content: space-between;
+    margin-top:1vh;
+    background-color:#6c757d;
+    padding:1vw;
+    border-radius: 10px;
+}
+
+#tasks-table{
+    display:flex;
+    align-items:flex-end;
+}
+
+.task-page-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#edit_done{
+    width:8vw
+}
+
+#textarea-moreinfo{
+    background: transparent;
+    color: #fff;
+    border: 0 none;
+    width: 31vw;
+    outline: none;
+    height: 10vh;
+}
+
+textarea::-webkit-scrollbar {
+    background-color: #f0f0f0;
+    width: 0.7vw;
+}
+/* Set the style for a textarea scrollbar thumb. */
+textarea::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #c2c2c2;
+}
+/* Set the style for a textarea scrollbar thumb hover. */
+textarea::-webkit-scrollbar-thumb:hover {
+    background-color: #696969;
+    }
+
+#edit_title_form {
+    width:30.3vw;
+}

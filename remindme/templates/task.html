@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}
+Remind.Me
+{% endblock %}
+{% block content %}
+{% if task_verify == None %}
+<h2 style="font-weight:bold;margin-top:1vh;">Sem tarefas?<br>Crie sua primeira!</h2>
+{% endif %}
+<!-- Listagem ordenada do banco com Jinja -->
+{% for task in task_list|sort(attribute='id') %}
+{% include "include/task_modals.html" %}
+{{ edit_form.hidden_tag() }}
+{{ delete_form.hidden_tag() }}
+{{ edit_done_form.hidden_tag() }}
+<div id="task-container" class="container bg-dark bg-gradient">
+  <div>
+    <form method="POST">
+    <input id="done_task" name="done_task" type="hidden" value="{{task.id}}">
+    {%if task.done == False%}
+    {{ edit_done_form.undone_submit(class="btn btn-warning", id="edit_done", placeholder="Em andamento") }}
+    {%else%}
+    {{ edit_done_form.done_submit(class="btn btn-success", id="edit_done", placeholder="Concluído") }}
+    {%endif%}
+    </form>
+  </div>
+
+  <div class="task-page-name">{{task.task_name}}  </div>
+  
+  <div >
+    <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-MoreInfo-{{ task.id }}">Ver Mais</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#Modal-Edit-{{ task.id }}">Editar</button>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#Modal-Delete-{{ task.id }}">Deletar</button>
+  </div>
+</div>
+
+{% endfor %}
+<div class="container">
+  <a class="btn btn-primary" style="margin-top:2vh;margin-bottom:2vh;" href="{{url_for('add_task_page')}}">Nova Tarefa</a>
+</div>
+
+{% endblock %}
+
