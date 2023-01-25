@@ -26,7 +26,7 @@ Rest api +Devs2blu project. Flask + Postgres + web + docker
 
 Tools Used
 
-* [Trello](https://trello.com/b/BvNi86AX/guidolooping) - organization tool
+* [Jira](https://start.atlassian.com) - organization tool
 * [Canva](https://www.canva.com/design/DAFMJp9Y2dI/egPWUWytIr0MWSqYgpAyUQ/edit) - Logo development
 * [VScode](https://code.visualstudio.com/) - development IDE
 * [Python](https://www.python.org/downloads/release/python-3111/) - Programming language
